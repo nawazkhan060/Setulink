@@ -1,0 +1,26 @@
+{
+  "name": "setulink",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:server": "node server/app.js",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build:client": "cd client && npm run build",
+    "build": "npm run build:client",
+    "start": "node server/app.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "fastest-levenshtein": "^1.0.16",
+    "papaparse": "^5.5.2",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
