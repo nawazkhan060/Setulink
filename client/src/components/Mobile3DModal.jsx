@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import {
   Shield,
   X,
@@ -28,10 +29,11 @@ export const Mobile3DModal = ({
   onResetSimulation
 }) => {
   if (!isOpen) return null;
+  if (typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[100] overflow-y-auto bg-slate-950/85 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-2.5 sm:p-5 animate-in fade-in duration-200"
+      className="fixed inset-0 z-[9999] overflow-y-auto bg-slate-950/85 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-2.5 sm:p-5 animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
@@ -310,6 +312,7 @@ export const Mobile3DModal = ({
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

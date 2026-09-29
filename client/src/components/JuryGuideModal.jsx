@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Shield,
   HelpCircle,
@@ -22,10 +23,11 @@ export const JuryGuideModal = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState('overview');
 
   if (!isOpen) return null;
+  if (typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[100] overflow-y-auto bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-2.5 sm:p-5"
+      className="fixed inset-0 z-[9999] overflow-y-auto bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-2.5 sm:p-5"
       onClick={onClose}
     >
       <div
@@ -372,6 +374,7 @@ export const JuryGuideModal = ({ isOpen, onClose }) => {
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
