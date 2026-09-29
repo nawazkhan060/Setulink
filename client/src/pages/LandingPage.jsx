@@ -31,6 +31,15 @@ export const LandingPage = () => {
   const [activeStage, setActiveStage] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
   const [tilt, setTilt] = useState({ x: 12, y: -15 });
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 1024 : false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const stages = [
     {
@@ -345,9 +354,9 @@ export const LandingPage = () => {
             }}
           >
             <div
-              className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center transition-all duration-700"
+              className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-center transition-all duration-700"
               style={{
-                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+                transform: isMobile ? 'none' : `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
                 transformStyle: 'preserve-3d'
               }}
             >
@@ -481,7 +490,7 @@ export const LandingPage = () => {
 
           {/* Tilt Controls for 3D Angle */}
           <div className="mt-8 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
-            <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
               <span>Adjust 3D Angle:</span>
               <button
                 onClick={() => setTilt({ x: 18, y: -20 })}
@@ -501,6 +510,11 @@ export const LandingPage = () => {
               >
                 Isometric Right
               </button>
+            </div>
+
+            <div className="sm:hidden flex items-center gap-1.5 text-gov-300 text-[11px] font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-gov-400" />
+              <span>3D Multi-Tier Process Active</span>
             </div>
 
             <div className="flex items-center gap-2 text-gov-400">
