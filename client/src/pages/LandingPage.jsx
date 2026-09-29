@@ -28,6 +28,7 @@ import {
 import { JuryGuideModal } from '../components/JuryGuideModal';
 import { Mobile3DModal } from '../components/Mobile3DModal';
 import { Pipeline3DVisualizer } from '../components/Pipeline3DVisualizer';
+import { DynamicWorkflowArchitecture } from '../components/DynamicWorkflowArchitecture';
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -350,6 +351,9 @@ export const LandingPage = () => {
 
         {/* 3D Live Pipeline & Interoperability Workflow Engine */}
         <Pipeline3DVisualizer />
+
+        {/* Continuous Dynamic Architecture Workflow Engine */}
+        <DynamicWorkflowArchitecture />
 
         {/* Key Innovation Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
