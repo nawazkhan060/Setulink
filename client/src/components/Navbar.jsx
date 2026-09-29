@@ -19,15 +19,18 @@ import {
   AlertTriangle,
   GitBranch,
   Radio,
-  History
+  History,
+  HelpCircle
 } from 'lucide-react';
 import { useNavigate, Link, NavLink } from 'react-router-dom';
+import { JuryGuideModal } from './JuryGuideModal';
 
 export const Navbar = () => {
   const { user, quickLogin, logout } = useAuth();
   const navigate = useNavigate();
   const [showRoleSwitcher, setShowRoleSwitcher] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [juryGuideOpen, setJuryGuideOpen] = useState(false);
 
   const roles = [
     { key: 'citizen', label: 'Citizen', desc: 'Rahul Sharma (Unified Single View)' },
@@ -86,12 +89,21 @@ export const Navbar = () => {
           <span className="truncate text-slate-400 text-[10px] sm:text-[11px]">
             1-Click role switching enabled for SIH 2026. Production uses SMTP 2FA & e-Pramaan SSO.
           </span>
-          <Link
-            to="/"
-            className="ml-auto text-gov-400 hover:text-gov-300 font-bold shrink-0 flex items-center gap-1 underline text-[10px] sm:text-xs"
-          >
-            <span>3D Engine</span>
-          </Link>
+          <div className="ml-auto flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setJuryGuideOpen(true)}
+              className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[10px] sm:text-[11px] shadow-sm transition"
+            >
+              <HelpCircle className="w-3 h-3" />
+              <span>Jury Guide</span>
+            </button>
+            <Link
+              to="/"
+              className="text-gov-400 hover:text-gov-300 font-bold flex items-center gap-1 underline text-[10px] sm:text-xs"
+            >
+              <span>3D Engine</span>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -278,6 +290,12 @@ export const Navbar = () => {
 
         </div>
       )}
+
+      {/* Jury & Evaluator Guide Modal */}
+      <JuryGuideModal
+        isOpen={juryGuideOpen}
+        onClose={() => setJuryGuideOpen(false)}
+      />
     </header>
   );
 };
