@@ -24,26 +24,32 @@ export const JuryGuideModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-5">
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-3xl w-full border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
+    <div
+      className="fixed inset-0 z-[100] overflow-y-auto bg-slate-950/80 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-2.5 sm:p-5"
+      onClick={onClose}
+    >
+      <div
+        className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-3xl w-full border border-slate-200 overflow-hidden my-auto max-h-[88vh] sm:max-h-[85vh] flex flex-col animate-in fade-in zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
         
-        {/* Header with GovTech SIH Tricolor Accents */}
-        <div className="bg-gradient-to-r from-gov-900 via-gov-800 to-slate-900 text-white p-5 sm:p-6 shrink-0 relative">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-2xl bg-gov-700/80 text-white border border-gov-500/40 shadow-md">
-                <Shield className="w-6 h-6 text-amber-400" />
+        {/* Header with GovTech SIH Tricolor Accents - Sticky at top */}
+        <div className="bg-gradient-to-r from-gov-900 via-gov-800 to-slate-900 text-white p-4 sm:p-6 shrink-0 relative border-b border-slate-800">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <div className="p-2 sm:p-2.5 rounded-2xl bg-gov-700/80 text-white border border-gov-500/40 shadow-md shrink-0">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono uppercase tracking-widest text-amber-300 font-bold">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-amber-300 font-bold">
                     SIH 2026 • SIH26129
                   </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">
+                  <span className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">
                     Interactive Jury Explainer
                   </span>
                 </div>
-                <h2 className="text-lg sm:text-xl font-black tracking-tight mt-0.5">
+                <h2 className="text-base sm:text-lg font-black tracking-tight mt-0.5 leading-snug">
                   SetuLink Prototype: Official Jury & Evaluator Guide
                 </h2>
               </div>
@@ -51,8 +57,9 @@ export const JuryGuideModal = ({ isOpen, onClose }) => {
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-300 transition"
+              className="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition shrink-0"
               title="Close Guide"
+              aria-label="Close Guide"
             >
               <X className="w-5 h-5" />
             </button>
@@ -345,15 +352,22 @@ export const JuryGuideModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 shrink-0 flex items-center justify-between">
-          <span className="text-[11px] text-slate-500 font-mono">
-            SetuLink • Smart India Hackathon Prototype
-          </span>
+        <div className="p-3 sm:p-4 bg-slate-50 border-t border-slate-200 shrink-0 flex items-center justify-between gap-2">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-gov-600 hover:bg-gov-700 text-white font-bold text-xs shadow-sm transition"
+            className="px-3.5 py-1.5 rounded-xl border border-slate-300 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition"
           >
-            Start Testing
+            Close Guide
+          </button>
+          <div className="hidden sm:block text-[11px] text-slate-500 font-mono">
+            SetuLink • Smart India Hackathon
+          </div>
+          <button
+            onClick={onClose}
+            className="px-4 sm:px-5 py-2 rounded-xl bg-gov-600 hover:bg-gov-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5"
+          >
+            <span>Start Testing</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
