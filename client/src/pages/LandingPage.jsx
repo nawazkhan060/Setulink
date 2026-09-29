@@ -27,7 +27,7 @@ import {
 } from 'lucide-react';
 import { JuryGuideModal } from '../components/JuryGuideModal';
 import { Mobile3DModal } from '../components/Mobile3DModal';
-import { Pipeline3DVisualizer } from '../components/Pipeline3DVisualizer';
+import { LiveArchitectureDiagram } from '../components/LiveArchitectureDiagram';
 import { DynamicWorkflowArchitecture } from '../components/DynamicWorkflowArchitecture';
 
 export const LandingPage = () => {
@@ -349,8 +349,8 @@ export const LandingPage = () => {
           </div>
         </div>
 
-        {/* 3D Live Pipeline & Interoperability Workflow Engine */}
-        <Pipeline3DVisualizer />
+        {/* Flat Live Architecture Flow Diagram (Non-textual, animated live data movement) */}
+        <LiveArchitectureDiagram />
 
         {/* Continuous Dynamic Architecture Workflow Engine */}
         <DynamicWorkflowArchitecture />
