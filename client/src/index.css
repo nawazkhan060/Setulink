@@ -32,3 +32,66 @@
   stroke-dasharray: 6 6;
   animation: flowDash 1.2s linear infinite;
 }
+
+.flow-line-reverse {
+  stroke-dasharray: 6 6;
+  animation: flowDash 1.4s linear infinite reverse;
+}
+
+@keyframes pulsePacket {
+  0% {
+    offset-distance: 0%;
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0.2;
+  }
+}
+
+@keyframes floatNode {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotateX(2deg);
+  }
+}
+
+.animate-float-node {
+  animation: floatNode 4s ease-in-out infinite;
+}
+
+@keyframes radarRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar {
+  animation: radarRotate 6s linear infinite;
+}
+
+@keyframes shimmerBeam {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.beam-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+  background-size: 200% 100%;
+  animation: shimmerBeam 2.5s infinite;
+}
