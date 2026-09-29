@@ -19,7 +19,8 @@ import {
   Zap,
   ChevronRight,
   AlertCircle,
-  HelpCircle
+  HelpCircle,
+  UserCheck
 } from 'lucide-react';
 import { JuryGuideModal } from '../components/JuryGuideModal';
 
