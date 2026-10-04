@@ -18,13 +18,18 @@ import {
   ChevronUp,
   Activity,
   Terminal,
-  Maximize2
+  Maximize2,
+  Minimize2,
+  X
 } from 'lucide-react';
 
-export const Pipeline3DVisualizer = () => {
+export const Pipeline3DVisualizer = ({
+  onOpenFullscreen,
+  isFullscreen = false,
+  onCloseFullscreen
+}) => {
   const [activeStage, setActiveStage] = useState(1); // 1 = Ingress, 2 = Middleware Core, 3 = Silo Fan-out, 4 = Golden Record
   const [isAutoStreaming, setIsAutoStreaming] = useState(true);
-  const [tilt, setTilt] = useState({ x: 14, y: -12 });
   const [showPayloadInspector, setShowPayloadInspector] = useState(false);
   const [injectedCount, setInjectedCount] = useState(482);
   const [lastPacket, setLastPacket] = useState({
@@ -65,7 +70,9 @@ export const Pipeline3DVisualizer = () => {
   };
 
   return (
-    <div className="relative bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-8 shadow-2xl overflow-hidden backdrop-blur-xl mb-12">
+    <div className={`relative bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 border border-slate-800 ${
+      isFullscreen ? 'rounded-none border-none p-4 sm:p-8 min-h-screen' : 'rounded-3xl p-5 sm:p-8 shadow-2xl mb-12'
+    } overflow-hidden backdrop-blur-xl`}>
       {/* Background cyber grid & neon lighting */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-gov-600/15 rounded-full blur-[100px] pointer-events-none" />
@@ -86,8 +93,8 @@ export const Pipeline3DVisualizer = () => {
               Deterministic 14ms
             </span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-            3D Interoperability Data Pipeline & Workflow Engine
+          <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <span>3D Interoperability Data Pipeline & Workflow Engine</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
             Watch live synthetic packets traverse from <strong>Citizen Sovereign Ingress</strong> through the <strong>SetuLink Middleware Core</strong>, fan out to <strong>3 heterogeneous silo formats</strong>, and re-emerge as a <strong>Unified Golden Record</strong>.
@@ -99,6 +106,7 @@ export const Pipeline3DVisualizer = () => {
           <button
             onClick={handleInjectPacket}
             className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold text-xs shadow-lg shadow-amber-500/20 transition active:scale-95"
+            title="Inject simulated citizen verification packet"
           >
             <Zap className="w-3.5 h-3.5 fill-slate-950" />
             <span>Inject Test Packet</span>
@@ -115,7 +123,7 @@ export const Pipeline3DVisualizer = () => {
             {isAutoStreaming ? (
               <>
                 <RotateCcw className="w-3.5 h-3.5 animate-spin" />
-                <span>Streaming Auto</span>
+                <span>Auto Stream</span>
               </>
             ) : (
               <>
@@ -134,6 +142,29 @@ export const Pipeline3DVisualizer = () => {
             <span className="sm:hidden">Payloads</span>
             {showPayloadInspector ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
+
+          {/* Fullscreen Mode Buttons */}
+          {onOpenFullscreen && !isFullscreen && (
+            <button
+              onClick={onOpenFullscreen}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gov-600 hover:bg-gov-500 text-white text-xs font-bold shadow-lg shadow-gov-600/30 transition"
+              title="Expand to Fullscreen View"
+            >
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>Fullscreen</span>
+            </button>
+          )}
+
+          {isFullscreen && onCloseFullscreen && (
+            <button
+              onClick={onCloseFullscreen}
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 border border-rose-500/40 text-rose-300 text-xs font-bold transition"
+              title="Exit Fullscreen Mode"
+            >
+              <Minimize2 className="w-3.5 h-3.5" />
+              <span>Exit Fullscreen</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -209,31 +240,21 @@ export const Pipeline3DVisualizer = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* 3D PIPELINE CANVAS                                                        */}
+      {/* FLAT ARCHITECTURAL PIPELINE CANVAS                                        */}
       {/* ========================================================================= */}
-      <div
-        className="relative py-6 sm:py-10 transition-transform duration-500 ease-out"
-        style={{ perspective: '1400px' }}
-      >
-        <div
-          className="relative transition-all duration-700"
-          style={{
-            transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-            transformStyle: 'preserve-3d'
-          }}
-        >
+      <div className="relative py-4 sm:py-6">
+        <div className="relative">
           
           {/* DESKTOP 3D PIPELINE GRID (3-Stage Flow) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             
             {/* STAGE 1: Sovereign Citizen Ingress (Left - 3 Cols) */}
             <div
-              className={`lg:col-span-3 p-5 rounded-2xl border transition-all duration-500 shadow-2xl relative ${
+              className={`lg:col-span-3 p-5 rounded-2xl border transition-all duration-300 shadow-xl relative ${
                 activeStage === 1
-                  ? 'bg-gov-950/95 border-gov-400 ring-2 ring-gov-500/50 translate-y-[-10px]'
-                  : 'bg-slate-900/90 border-slate-800 opacity-80'
+                  ? 'bg-gov-950/95 border-gov-400 ring-2 ring-gov-500/50'
+                  : 'bg-slate-900/90 border-slate-800 opacity-90'
               }`}
-              style={{ transform: 'translateZ(25px)' }}
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 rounded-xl bg-gov-600/30 border border-gov-500/40 text-gov-300 flex items-center justify-center">
@@ -291,12 +312,11 @@ export const Pipeline3DVisualizer = () => {
 
             {/* STAGE 2: SetuLink Core Middleware Processor (Center - 4 Cols) */}
             <div
-              className={`lg:col-span-4 p-6 rounded-2xl border-2 transition-all duration-500 shadow-2xl relative ${
+              className={`lg:col-span-4 p-6 rounded-2xl border-2 transition-all duration-300 shadow-2xl relative ${
                 activeStage === 2
-                  ? 'bg-gradient-to-b from-gov-900/90 via-slate-900 to-indigo-950/90 border-indigo-400 ring-4 ring-indigo-500/40 translate-y-[-18px]'
+                  ? 'bg-gradient-to-b from-gov-900/90 via-slate-900 to-indigo-950/90 border-indigo-400 ring-4 ring-indigo-500/40'
                   : 'bg-slate-900/90 border-slate-700 opacity-90'
               }`}
-              style={{ transform: 'translateZ(60px)' }}
             >
               {/* Core Badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-indigo-500 text-white font-mono text-[10px] font-bold shadow-md flex items-center gap-1.5">
@@ -361,12 +381,11 @@ export const Pipeline3DVisualizer = () => {
 
             {/* STAGE 3: Siloed Department Stack (Right - 3 Cols) */}
             <div
-              className={`lg:col-span-3 p-5 rounded-2xl border transition-all duration-500 shadow-2xl relative space-y-2.5 ${
+              className={`lg:col-span-3 p-5 rounded-2xl border transition-all duration-300 shadow-xl relative space-y-2.5 ${
                 activeStage === 3
-                  ? 'bg-slate-900 border-amber-400 ring-2 ring-amber-500/40 translate-y-[-10px]'
-                  : 'bg-slate-900/90 border-slate-800 opacity-80'
+                  ? 'bg-slate-900 border-amber-400 ring-2 ring-amber-500/40'
+                  : 'bg-slate-900/90 border-slate-800 opacity-90'
               }`}
-              style={{ transform: 'translateZ(25px)' }}
             >
               <div className="flex items-center justify-between pb-2 border-b border-slate-800">
                 <span className="font-extrabold text-sm text-white">Siloed Stack</span>
@@ -453,28 +472,13 @@ export const Pipeline3DVisualizer = () => {
         </div>
       </div>
 
-      {/* 3D Angle Preset Controls */}
+      {/* Status Bar */}
       <div className="relative z-10 mt-4 pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
-        <div className="hidden sm:flex items-center gap-2">
-          <span>3D Angle:</span>
-          <button
-            onClick={() => setTilt({ x: 18, y: -20 })}
-            className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]"
-          >
-            Isometric Left
-          </button>
-          <button
-            onClick={() => setTilt({ x: 0, y: 0 })}
-            className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]"
-          >
-            Flat Diagram
-          </button>
-          <button
-            onClick={() => setTilt({ x: 18, y: 20 })}
-            className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px]"
-          >
-            Isometric Right
-          </button>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-400" />
+          <span className="font-mono text-[11px] text-slate-300">
+            Architecture View: Flat Multi-Silo Synchronizer (Zero Perspective Distortion)
+          </span>
         </div>
 
         <div className="flex items-center gap-3 text-[11px] font-mono">
